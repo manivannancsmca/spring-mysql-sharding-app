@@ -1,10 +1,90 @@
+version: '3.8'
+
 services:
-  mysql:
-    image: 'mysql:latest'
+  # 1. Lookup Database
+  db_lookup:
+    image: mysql:8.0
+    container_name: mysql_lookup
     environment:
-      - 'MYSQL_DATABASE=mydatabase'
-      - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=myuser'
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_lookup_db
     ports:
-      - '3306'
+      - "3306:3306"
+    volumes:
+      - ./init-sql/lookup.sql:/docker-entrypoint-initdb.dir/lookup.sql
+    networks:
+      - sharding-network
+
+  # 2. Shard 1 Database
+  db_shard1:
+    image: mysql:8.0
+    container_name: mysql_shard_1
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_1
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    networks:
+      - sharding-network
+
+  # 3. Shard 2 Database
+  db_shard2:
+    image: mysql:8.0
+    container_name: mysql_shard_2
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_2
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    networks:
+      - sharding-network
+
+  # 4. Shard 3 Database
+  db_shard3:
+    image: mysql:8.0
+    container_name: mysql_shard_3
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_3
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    networks:
+      - sharding-network
+
+  # 5. Shard 4 Database
+  db_shard4:
+    image: mysql:8.0
+    container_name: mysql_shard_4
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_4
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    networks:
+      - sharding-network
+
+  # 6. Shard 5 Database
+  db_shard5:
+    image: mysql:8.0
+    container_name: mysql_shard_5
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_5
+    ports:
+      - "3311:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    networks:
+      - sharding-network
+
+networks:
+  sharding-network:
+    driver: bridge
