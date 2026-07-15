@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final LookupRepository lookupRepository;
+    private LookupRepository lookupRepository;
     private ProductRepository productRepository;
 
     // 1. UUID Hashing Algorithm (Deterministic modulo 5)

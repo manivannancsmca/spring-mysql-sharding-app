@@ -14,6 +14,11 @@ services:
       - "3307:3306"
     volumes:
       - ./init-sql/lookup.sql:/docker-entrypoint-initdb.dir/lookup.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
     networks:
       - sharding-network
 
@@ -30,6 +35,11 @@ services:
       - "3308:3306"
     volumes:
       - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
     networks:
       - sharding-network
 
@@ -46,6 +56,11 @@ services:
       - "3309:3306"
     volumes:
       - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
     networks:
       - sharding-network
 
@@ -62,6 +77,11 @@ services:
       - "3310:3306"
     volumes:
       - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
     networks:
       - sharding-network
 
@@ -78,6 +98,11 @@ services:
       - "3311:3306"
     volumes:
       - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
     networks:
       - sharding-network
 
@@ -94,6 +119,11 @@ services:
       - "3312:3306"
     volumes:
       - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
     networks:
       - sharding-network
 
