@@ -1,3 +1,65 @@
 spring:
   application:
     name: spring-mysql-sharding-app
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate # Production-ல் எப்போதும் 'validate' மட்டுமே பயன்படுத்த வேண்டும் (update கூடாது)
+    show-sql: false # SQL லாக்களை புரொடக்ஷனில் ஆஃப் செய்ய வேண்டும் (Performance-க்காக)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        jdbc:
+          batch_size: 50 # Bulk inserts வேகத்தை அதிகரிக்க
+          order_inserts: true
+          order_updates: true
+
+# Hikari Connection Pool settings தனி மேக்ரோவாக (Reusable Anchor)
+database:
+  hikari-common: &hikari-settings
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    maximum-pool-size: 20 # ஒவ்வொரு டேட்டாபேஸிற்கும் அதிகபட்சம் 20 கனெக்ஷன்கள்
+    minimum-idle: 5
+    idle-timeout: 300000 # 5 நிமிடங்கள்
+    max-lifetime: 1800000 # 30 நிமிடங்கள்
+    connection-timeout: 20000 # 20 வினாடிகள்
+    pool-name: ShardHikariPool
+
+# அனைத்து 6 டேட்டாபேஸ் சோர்ஸ்களின் விபரங்கள்
+datasource:
+  lookup:
+    url: jdbc:mysql://10.0.0.5:3307/product_lookup_db?useSSL=true&serverTimezone=UTC
+    username: prod_user
+    password: ${LOOKUP_DB_PASSWORD} # செக்யூரிட்டிக்காக Environment Variable
+    <<: *hikari-settings # பொதுவான Hikari செட்டிங்ஸை இங்கே இணைக்கிறது
+
+  shard1:
+    url: jdbc:mysql://10.0.0.11:3307/product_shard_1?useSSL=true&serverTimezone=UTC
+    username: prod_user
+    password: ${SHARD1_DB_PASSWORD}
+    <<: *hikari-settings
+
+  shard2:
+    url: jdbc:mysql://10.0.0.12:3307/product_shard_2?useSSL=true&serverTimezone=UTC
+    username: prod_user
+    password: ${SHARD2_DB_PASSWORD}
+    <<: *hikari-settings
+
+  shard3:
+    url: jdbc:mysql://10.0.0.13:3307/product_shard_3?useSSL=true&serverTimezone=UTC
+    username: prod_user
+    password: ${SHARD3_DB_PASSWORD}
+    <<: *hikari-settings
+
+  shard4:
+    url: jdbc:mysql://10.0.0.14:3307/product_shard_4?useSSL=true&serverTimezone=UTC
+    username: prod_user
+    password: ${SHARD4_DB_PASSWORD}
+    <<: *hikari-settings
+
+  shard5:
+    url: jdbc:mysql://10.0.0.15:3307/product_shard_5?useSSL=true&serverTimezone=UTC
+    username: prod_user
+    password: ${SHARD5_DB_PASSWORD}
+    <<: *hikari-settings
