@@ -1,0 +1,52 @@
+### =========================================================================
+### PRODUCT SHARDING SYSTEM - TESTING API
+### =========================================================================
+
+@baseUrl = http://localhost:8080/api/products
+
+
+### 1. (Create Product)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "PlayStation 5 Pro",
+  "brandname": "Sony",
+  "quantity": 50,
+  "price": 69999.00
+}
+
+
+### 2. (Get Product By ID)
+GET {{baseUrl}}/042d38db-c82b-4d43-9871-3343ef0c7c01
+Accept: application/json
+
+
+### 3. (Search Products By Name)
+GET {{baseUrl}}/search/name?name=Apple
+Accept: application/json
+
+
+### 4. (Pagination - Page 0)
+GET {{baseUrl}}/search/name?name=Apple&page=0&size=3
+Accept: application/json
+
+
+### 5. (Pagination - Page 1)
+GET {{baseUrl}}/search/name?name=Apple&page=1&size=3
+Accept: application/json
+
+
+### 6.(Search Products By Brand)
+GET {{baseUrl}}/search/brand?brand=Logitech
+Accept: application/json
+
+
+### 7. (Pagination for Brand - Page 0)
+GET {{baseUrl}}/search/brand?brand=Logitech&page=0&size=5
+Accept: application/json
+
+
+### 8. (Edge Case - Not Found)
+GET {{baseUrl}}/99999999-9999-9999-9999-999999999999
+Accept: application/json
