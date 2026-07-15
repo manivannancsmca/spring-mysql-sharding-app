@@ -13,6 +13,7 @@ spring:
         timeout: 2m
   
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -38,37 +39,37 @@ database:
 
   datasource:
     lookup:
-      jdbc-url: jdbc:mysql://localhost:3307/product_lookup_db?useSSL=false&serverTimezone=UTC
+      jdbc-url: jdbc:mysql://localhost:3307/product_lookup_db?useSSL=false&serverTimezone=UTC&connectionComment=LOOKUP_DB
       username: appuser
       password: apppassword
       <<: *hikari-settings
 
     shard1:
-      jdbc-url: jdbc:mysql://localhost:3308/product_shard_1?useSSL=false&serverTimezone=UTC
+      jdbc-url: jdbc:mysql://localhost:3308/product_shard_1?useSSL=false&serverTimezone=UTC&connectionComment=SHARD1_DB
       username: appuser
       password: apppassword
       <<: *hikari-settings
 
     shard2:
-      jdbc-url: jdbc:mysql://localhost:3309/product_shard_2?useSSL=false&serverTimezone=UTC
+      jdbc-url: jdbc:mysql://localhost:3309/product_shard_2?useSSL=false&serverTimezone=UTC&connectionComment=SHARD2_DB
       username: appuser
       password: apppassword
       <<: *hikari-settings
 
     shard3:
-      jdbc-url: jdbc:mysql://localhost:3310/product_shard_3?useSSL=false&serverTimezone=UTC
+      jdbc-url: jdbc:mysql://localhost:3310/product_shard_3?useSSL=false&serverTimezone=UTC&connectionComment=SHARD3_DB
       username: appuser
       password: apppassword
       <<: *hikari-settings
 
     shard4:
-      jdbc-url: jdbc:mysql://localhost:3311/product_shard_4?useSSL=false&serverTimezone=UTC
+      jdbc-url: jdbc:mysql://localhost:3311/product_shard_4?useSSL=false&serverTimezone=UTC&connectionComment=SHARD4_DB
       username: appuser
       password: apppassword
       <<: *hikari-settings
 
     shard5:
-      jdbc-url: jdbc:mysql://localhost:3312/product_shard_5?useSSL=false&serverTimezone=UTC
+      jdbc-url: jdbc:mysql://localhost:3312/product_shard_5?useSSL=false&serverTimezone=UTC&connectionComment=SHARD5_DB
       username: appuser
       password: apppassword
       <<: *hikari-settings

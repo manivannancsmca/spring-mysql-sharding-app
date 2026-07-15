@@ -48,7 +48,8 @@ public class ProductService {
 
         String uuid = UUID.randomUUID().toString();
         product.setProductId(uuid);
-        product.setCreationDate(LocalDateTime.now());;
+        product.setCreationDate(LocalDateTime.now());
+        ;
 
         int shardId = determineShardId(uuid);
 
@@ -71,18 +72,16 @@ public class ProductService {
     }
 
     public Optional<Product> getProductById(String productId) {
-        System.out.println("productId:::::::: " + productId);
-        
-        Optional<ProductSearchIndex> indexOpt = shardRoutingService.getLookupIndex(productId);
-        System.out.println("indexOpt is empty :: " + indexOpt.isEmpty());
-        
-        if (indexOpt.isEmpty()) {
+        // 1. Read from Lookup DB without manual transaction routing
+        Optional<ProductSearchIndex> indexOpt = lookupRepository.findById(productId);
+
+        if (indexOpt.isEmpty())
             return Optional.empty();
-        }
 
         int shardId = indexOpt.get().getShardId();
-        System.out.println("shardId >>>>>>>>>> " + shardId);
-        
+
+        // 2. Dynamic Connection Fetching via Factory pattern (Instead of
+        // AbstractRoutingDataSource)
         return shardRoutingService.getProductFromShard(productId, shardId);
     }
 

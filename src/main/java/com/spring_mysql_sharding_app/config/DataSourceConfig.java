@@ -1,5 +1,6 @@
 package com.spring_mysql_sharding_app.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -54,22 +55,29 @@ public class DataSourceConfig {
 
     @Primary
     @Bean
-    @DependsOn({"lookupDS", "shard1DS", "shard2DS", "shard3DS", "shard4DS", "shard5DS"})
-    public DataSource dataSource() {
+    public DataSource dataSource(
+            @Qualifier("lookupDS") DataSource lookupDS,
+            @Qualifier("shard1DS") DataSource shard1DS,
+            @Qualifier("shard2DS") DataSource shard2DS,
+            @Qualifier("shard3DS") DataSource shard3DS,
+            @Qualifier("shard4DS") DataSource shard4DS,
+            @Qualifier("shard5DS") DataSource shard5DS) {
+
         ShardRoutingDataSource routingDataSource = new ShardRoutingDataSource();
 
         Map<Object, Object> dataSourceMap = new HashMap<>();
-        dataSourceMap.put("lookup", lookupDataSource());
-        dataSourceMap.put("shard1", shard1DataSource());
-        dataSourceMap.put("shard2", shard2DataSource());
-        dataSourceMap.put("shard3", shard3DataSource());
-        dataSourceMap.put("shard4", shard4DataSource());
-        dataSourceMap.put("shard5", shard5DataSource());
+        dataSourceMap.put("lookup", lookupDS);
+        dataSourceMap.put("shard1", shard1DS);
+        dataSourceMap.put("shard2", shard2DS);
+        dataSourceMap.put("shard3", shard3DS);
+        dataSourceMap.put("shard4", shard4DS);
+        dataSourceMap.put("shard5", shard5DS);
 
+        System.out.println("DEBUG: Available Datasource Keys: " + dataSourceMap.keySet());
+        
         routingDataSource.setTargetDataSources(dataSourceMap);
-        routingDataSource.setDefaultTargetDataSource(lookupDataSource());
+        routingDataSource.setDefaultTargetDataSource(lookupDS); // பராமீட்டராக வந்ததை வைக்கவும்
 
-        // This enforces AbstractRoutingDataSource to validate and initialize its internal target map
         routingDataSource.afterPropertiesSet();
 
         return routingDataSource;
