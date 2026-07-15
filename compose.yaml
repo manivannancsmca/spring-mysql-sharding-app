@@ -8,6 +8,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: product_lookup_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
     ports:
       - "3307:3306"
     volumes:
@@ -22,6 +24,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: product_shard_1
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
     ports:
       - "3308:3306"
     volumes:
@@ -36,6 +40,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: product_shard_2
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
     ports:
       - "3309:3306"
     volumes:
@@ -50,6 +56,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: product_shard_3
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
     ports:
       - "3310:3306"
     volumes:
@@ -64,6 +72,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: product_shard_4
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
     ports:
       - "3311:3306"
     volumes:
@@ -78,6 +88,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: product_shard_5
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
     ports:
       - "3312:3306"
     volumes:
