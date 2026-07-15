@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.hash.Hashing;
@@ -31,8 +32,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private LookupRepository lookupRepository;
-    private ProductRepository productRepository;
+    private final LookupRepository lookupRepository;
+    private final ProductRepository productRepository;
+
+    private final ShardRoutingService shardRoutingService;
 
     // 1. UUID Hashing Algorithm (Deterministic modulo 5)
     private int determineShardId(String uuid) {
@@ -45,7 +48,7 @@ public class ProductService {
 
         String uuid = UUID.randomUUID().toString();
         product.setProductId(uuid);
-        product.setCreationdate(LocalDateTime.now());
+        product.setCreationDate(LocalDateTime.now());;
 
         int shardId = determineShardId(uuid);
 
@@ -55,7 +58,7 @@ public class ProductService {
         ProductSearchIndex index = new ProductSearchIndex();
         index.setProductId(uuid);
         index.setName(product.getName());
-        index.setBrandname(product.getBrandname());
+        index.setBrandname(product.getBrandName());
         index.setShardId(shardId);
         lookupRepository.save(index);
 
@@ -68,20 +71,19 @@ public class ProductService {
     }
 
     public Optional<Product> getProductById(String productId) {
-
-        ShardContext.setShard("lookup");
-        Optional<ProductSearchIndex> indexOpt = lookupRepository.findById(productId);
-
-        if (indexOpt.isEmpty())
+        System.out.println("productId:::::::: " + productId);
+        
+        Optional<ProductSearchIndex> indexOpt = shardRoutingService.getLookupIndex(productId);
+        System.out.println("indexOpt is empty :: " + indexOpt.isEmpty());
+        
+        if (indexOpt.isEmpty()) {
             return Optional.empty();
+        }
 
         int shardId = indexOpt.get().getShardId();
-        ShardContext.setShard("shard" + shardId);
-
-        Optional<Product> product = productRepository.findById(productId);
-
-        ShardContext.clear();
-        return product;
+        System.out.println("shardId >>>>>>>>>> " + shardId);
+        
+        return shardRoutingService.getProductFromShard(productId, shardId);
     }
 
     public Page<Product> searchByNameWithPagination(String name, int page, int size) {
@@ -119,12 +121,12 @@ public class ProductService {
 
         for (int i = 1; i <= 5; i++) {
             ShardContext.setShard("shard" + i);
-            combinedResult.addAll(productRepository.findByCreationdateBetween(start, end));
+            combinedResult.addAll(productRepository.findByCreationDateBetween(start, end));
         }
 
         ShardContext.clear();
         // அப்ளிகேஷன் லெவலில் தேதியை Sort செய்தல்
-        combinedResult.sort(Comparator.comparing(Product::getCreationdate).reversed());
+        combinedResult.sort(Comparator.comparing(Product::getCreationDate).reversed());
         return combinedResult;
     }
 }

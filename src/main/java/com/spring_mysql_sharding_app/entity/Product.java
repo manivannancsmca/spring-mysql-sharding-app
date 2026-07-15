@@ -16,10 +16,21 @@ import java.time.LocalDateTime;
 @Builder
 public class Product {
     @Id
+    @Column(name = "product_id")
     private String productId;
+
+    @Column(name = "name")
     private String name;
-    private String brandname;
-    private int quantity;
-    private double price;
-    private LocalDateTime creationdate;
+
+    @Column(name = "brandname")
+    private String brandName;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "creationdate")
+    private LocalDateTime creationDate;
 }

@@ -2,7 +2,7 @@
 ### PRODUCT SHARDING SYSTEM - TESTING API
 ### =========================================================================
 
-@baseUrl = http://localhost:8080/api/products
+@baseUrl = http://localhost:8081/api/v1/products
 
 
 ### 1. (Create Product)
@@ -18,7 +18,7 @@ Content-Type: application/json
 
 
 ### 2. (Get Product By ID)
-GET {{baseUrl}}/042d38db-c82b-4d43-9871-3343ef0c7c01
+GET {{baseUrl}}/f9a0b0c1-d2e3-4f5a-6b7c-8d9e0f1a2b80
 Accept: application/json
 
 
