@@ -73,3 +73,7 @@ database:
       username: appuser
       password: apppassword
       <<: *hikari-settings
+
+app:
+  sharding:
+    shard-count: 5

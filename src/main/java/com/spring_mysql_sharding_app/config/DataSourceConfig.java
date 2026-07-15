@@ -73,8 +73,6 @@ public class DataSourceConfig {
         dataSourceMap.put("shard4", shard4DS);
         dataSourceMap.put("shard5", shard5DS);
 
-        System.out.println("DEBUG: Available Datasource Keys: " + dataSourceMap.keySet());
-        
         routingDataSource.setTargetDataSources(dataSourceMap);
         routingDataSource.setDefaultTargetDataSource(lookupDS); // பராமீட்டராக வந்ததை வைக்கவும்
 

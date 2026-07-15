@@ -78,11 +78,8 @@ public class ProductService {
         if (indexOpt.isEmpty())
             return Optional.empty();
 
-        int shardId = indexOpt.get().getShardId();
+        return shardRoutingService.getProductFromShard(productId);
 
-        // 2. Dynamic Connection Fetching via Factory pattern (Instead of
-        // AbstractRoutingDataSource)
-        return shardRoutingService.getProductFromShard(productId, shardId);
     }
 
     public Page<Product> searchByNameWithPagination(String name, int page, int size) {

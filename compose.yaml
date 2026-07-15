@@ -13,7 +13,8 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - ./init-sql/lookup.sql:/docker-entrypoint-initdb.dir/lookup.sql
+      # திருத்தப்பட்டது: .dir-க்கு பதிலாக .d என மாற்றப்பட்டுள்ளது
+      - ./init-sql/lookup.sql:/docker-entrypoint-initdb.d/lookup.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
       timeout: 5s
@@ -34,7 +35,7 @@ services:
     ports:
       - "3308:3306"
     volumes:
-      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
       timeout: 5s
@@ -55,7 +56,7 @@ services:
     ports:
       - "3309:3306"
     volumes:
-      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
       timeout: 5s
@@ -76,7 +77,7 @@ services:
     ports:
       - "3310:3306"
     volumes:
-      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
       timeout: 5s
@@ -97,7 +98,7 @@ services:
     ports:
       - "3311:3306"
     volumes:
-      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
       timeout: 5s
@@ -118,7 +119,7 @@ services:
     ports:
       - "3312:3306"
     volumes:
-      - ./init-sql/shard.sql:/docker-entrypoint-initdb.dir/shard.sql
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
       timeout: 5s

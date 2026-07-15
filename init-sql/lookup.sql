@@ -47,7 +47,7 @@ INSERT INTO product_search_index (product_id, name, brandname, shard_id) VALUES
 ('a1c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d52', 'Forerunner 965', 'Garmin', 2),
 ('b2d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e57', 'Razer DeathAdder V3', 'Razer', 2),
 ('c3e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f62', 'GoPro Max 360', 'GoPro', 2),
-('d4f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a67', 'Kindle Scribe', 'Amazon', 2),
+('d4f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a67', 'Kindle Scribe', 'Amazon', 3),
 ('e5a7b8c9-d0e1-2f3a-4b5c-6d7e8f9a0b72', 'DualSense Edge Controller', 'Sony', 2),
 ('f6b8c9d0-e1f2-3a4b-5c6d-7e8f9a0b1c77', 'Nest Cam Outdoor', 'Google', 2),
 ('0ad1c2b3-4e5f-6a7b-8c9d-0e1f2a3b4c82', 'Arctis Nova Pro Wireless', 'SteelSeries', 2),
